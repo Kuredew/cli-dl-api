@@ -1,0 +1,6 @@
+# Ignore environment variable
+.env
+
+__pycache__
+downloads
+.venv
