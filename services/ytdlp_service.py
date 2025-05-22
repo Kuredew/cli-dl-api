@@ -21,6 +21,7 @@ class YtdlpServices:
             }
         
         ydl_opts['outtmpl'] = f'{self.output_folder}%(title)s.%(ext)s'
+        ydl_opts['quiet'] = True
         print(ydl_opts)
 
         try:
