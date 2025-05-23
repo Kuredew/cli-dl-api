@@ -9,7 +9,7 @@ class YtdlpServices:
         self.uuid = str(uuid.uuid4())
         self.output_folder = config.DOWNLOAD_FOLDER + '/' + self.uuid + '/'
 
-    def download(self, format, reso=None):
+    def download(self, format, reso=None, convert='false'):
         if format == 'video':
             ydl_opts = {
                 'format_sort': [f'res:{reso}'],
@@ -17,11 +17,23 @@ class YtdlpServices:
             }
         elif format == 'audio':
             ydl_opts = {
-                'format': 'ba'
+                'format': 'ba',
+                'postprocessing': [{
+                    'key': 'FFmpegExtractAudio',
+                    'preferredCodec': 'mp3'
+                }]
             }
         
         ydl_opts['outtmpl'] = f'{self.output_folder}%(title)s.%(ext)s'
         ydl_opts['quiet'] = True
+
+        if convert == 'true':
+            ydl_opts['postprocessing'] = [{
+                'key': 'FFmpegVideoConvertor',
+                'preferredCodec': 'h264',
+                'preferredFormat': 'mp4'
+            }]
+
         print(ydl_opts)
 
         try:

@@ -2,10 +2,11 @@ from utils import Url
 import config
 
 class Urls:
-    def __init__(self, url, format, reso):
+    def __init__(self, url, format, reso, convert):
         self.url = url
         self.format = format
         self.reso = reso
+        self.convert = convert
 
     def get_json(self):
         return {
@@ -26,7 +27,7 @@ class Urls:
         return json
 
     def get_info(self):
-        uuid = Url(self.url, self.format, self.reso).get_download_uuid()
+        uuid = Url(self.url, self.format, self.reso, self.convert).get_download_uuid()
 
         if uuid:
             return self.pass_info(True, uuid)
