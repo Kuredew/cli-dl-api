@@ -1,12 +1,11 @@
 from yt_dlp import YoutubeDL
-from utils import Logging
-from utils import cookies_utils
+from utils import Cookie, Logging
 import uuid
 import config
 
-cookie_file = cookies_utils.get_cookie()
-
 class YtdlpServices:
+    cookie_file = Cookie().get_cookie()
+
     def __init__(self, url):
         self.url = url
         self.uuid = str(uuid.uuid4())
@@ -27,7 +26,7 @@ class YtdlpServices:
                 }]
             }
         
-        ydl_opts['cookiefile'] = cookie_file
+        ydl_opts['cookiefile'] = self.cookie_file
         ydl_opts['outtmpl'] = f'{self.output_folder}%(title)s.%(ext)s'
         ydl_opts['quiet'] = True
 

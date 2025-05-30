@@ -1,6 +1,3 @@
-from services import YtdlpServices
-import config
-
 class Url:
     def __init__(self, url, format, reso, convert):
         self.url = url
@@ -9,6 +6,8 @@ class Url:
         self.convert = convert
 
     def get_download_uuid(self):
+        from services import YtdlpServices
+
         yt_dlp = YtdlpServices(self.url)
         uuid = yt_dlp.download(self.format, self.reso, self.convert)
 
