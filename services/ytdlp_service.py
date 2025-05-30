@@ -1,7 +1,10 @@
 from yt_dlp import YoutubeDL
 from utils import Logging
+from utils import cookies_utils
 import uuid
 import config
+
+cookie_file = cookies_utils.get_cookie()
 
 class YtdlpServices:
     def __init__(self, url):
@@ -24,6 +27,7 @@ class YtdlpServices:
                 }]
             }
         
+        ydl_opts['cookiefile'] = cookie_file
         ydl_opts['outtmpl'] = f'{self.output_folder}%(title)s.%(ext)s'
         ydl_opts['quiet'] = True
 
@@ -34,7 +38,7 @@ class YtdlpServices:
                 'preferredFormat': 'mp4'
             }]
 
-        print(ydl_opts)
+        Logging.info(f'Calling yt-dlp in above options : {ydl_opts}')
 
         try:
             with YoutubeDL(ydl_opts) as ydl:
